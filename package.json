@@ -1,0 +1,17 @@
+{
+  "name": "safe-json-log",
+  "version": "0.0.2",
+  "description": "log logger json circular",
+  "main": "index.js",
+  "dependencies": {
+    "json-stringify-safe": "^5.0.1"
+  },
+  "devDependencies": {
+    "serialize-error": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Stein",
+  "license": "Unlicense"
+}
