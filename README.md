@@ -1,9 +1,10 @@
 # Safe JSON Log
 
-Safely log any object. Won't throw error on circular refernce.
+Safely log any object. Like `JSON.stringify()`, but won't error on
+circular refernce.
 
-Would be awesome if it nicely logged out `Error` objects, but until
-then use `serialize-error`.
+Would be awesome if it nicely logged `Error` objects. Until then use
+`serialize-error`.
 
 Install
 
@@ -14,7 +15,7 @@ npm i safe-json-log
 Example Usage
 
 ```js
-const Logger = require('safe-json-log')
+const Log = require('safe-json-log')
 const se = require('serialize-error')
 const o = {
   name: 'freddy',
@@ -34,11 +35,12 @@ const o = {
   }
 }
 o.circular = o
-const log = new Logger({
-  level: 'debug',
-  indent: 2
-})
+const log = new Log({ level: 'debug' })
 log.error(o)
+// can be called like JSON.stringify(value, replacer, space)
+log.error(o, null, 2)
+// we allow omitting replacer
+log.error(o, 2)
 ```
 
 Output

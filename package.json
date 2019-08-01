@@ -1,7 +1,8 @@
 {
   "name": "safe-json-log",
-  "version": "0.0.2",
-  "description": "log logger json circular",
+  "version": "0.0.4",
+  "description": "Safely log with json-stringify-safe",
+  "keywords": "log logger JSON safe circular node node.js configurable levels",
   "main": "index.js",
   "dependencies": {
     "json-stringify-safe": "^5.0.1"
