@@ -6,12 +6,25 @@ const fs = require('fs')
 const isStringOrNumber = (o) => o &&
   Object.prototype.toString.call(o) === '[object String]' ||
   !isNaN(parseInt(o, 10))
+const excludeKeysReplacer = (keys) => (key, value) =>
+  keys.includes(key) ? undefined : value
+// unfortunately json-stringify-safe doesn't allow you to pass an array
+// as replacer. so we have to create our own replacer to mimic the default
+// JSON.stringify() replacer behavior.
+const includeKeysReplacer = (keys) => (key, value) =>
+  keys.includes(key) || key === '' ? value : undefined
 class Log {
   constructor(options) {
     options = options || {}
     this.out = process.stdout
     this.level = 'off'
     this.replacer = null
+    // replacerArrayExcludes = true causes the replacer (when it's an
+    // array) to work the opposite of the normal JSON.stringify().
+    // instead of including keys in the array, we exclude the keys in
+    // the array.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+    this.replacerArrayExcludes = true
     this.space = null
     this.delimiter = '\n'
     this.levels = {
@@ -38,9 +51,15 @@ class Log {
             space = replacer
             replacer = null
           }
+          replacer = replacer || this.replacer
+          if (Array.isArray(replacer)) {
+            replacer = this.replacerArrayExcludes ?
+              excludeKeysReplacer(replacer) :
+              includeKeysReplacer(replacer.concat(['time', 'level', 'log']))
+          }
           this.out.write(`${ss(
             o,
-            replacer || this.replacer,
+            replacer,
             space || this.space)}${this.delimiter}`)
         }
       }
@@ -88,9 +107,10 @@ if (require.main === module) {
   o.circular = o
   const log = new Log({
     level: 'debug',
-    logLevelFile: 'llf'
+    logLevelFile: 'llf',
+    replacerArrayExcludes: false
   })
   // setInterval(() => {
-    log.error(o, 2)
+  log.error(o, ['name', 'address', 'zip'], 2)
   // }, 3000)
 }
