@@ -1,14 +1,11 @@
 {
   "name": "safe-json-log",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Safely log with json-stringify-safe",
   "keywords": "log logger JSON safe circular node node.js configurable levels",
   "main": "index.js",
   "dependencies": {
     "json-stringify-safe": "^5.0.1"
-  },
-  "devDependencies": {
-    "serialize-error": "^4.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -3,9 +3,6 @@
 Safely log any object. Like `JSON.stringify()`, but won't error on
 circular refernce.
 
-Would be awesome if it nicely logged `Error` objects. Until then use
-`serialize-error`.
-
 Install
 
 ```sh
