@@ -3,6 +3,8 @@
 Safely log any object. Like `JSON.stringify()`, but won't error on
 circular refernce.
 
+DEPRECATED: Use [abc-log](https://www.npmjs.com/package/abc-log)
+
 Install
 
 ```sh
